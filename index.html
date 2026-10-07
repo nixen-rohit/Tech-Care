@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Care</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Manrope', 'system-ui', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        @keyframes menuIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .menu-anim {
+            animation: menuIn 0.3s ease-out;
+        }
+
+        .patient-row {
+            transition: background-color 0.15s ease;
+        }
+        .patient-row:hover {
+            background-color: #F6F7F8;
+        }
+        .patient-row.active,
+        .patient-row.active:hover {
+            background-color: #D8FCF7;
+        }
+        .thin-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: #C9CDD0 transparent;
+        }
+        .thin-scroll::-webkit-scrollbar {
+            height: 6px;
+            width: 6px;
+        }
+        .thin-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .thin-scroll::-webkit-scrollbar-thumb {
+            background: #C9CDD0;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+
+<body class="font-sans text-[#072635] bg-white">
+
+    <div class="mx-auto mt-4 max-w-[1500px] px-4">
+
+        <!-- Top Bar -->
+        <header class="mb-4 mt-4">
+            <nav class="flex w-full flex-col rounded-[45px] bg-white px-4 shadow-md sm:px-6">
+
+                <div class="flex h-[72px] w-full items-center justify-between gap-2">
+
+                    <a href="#" class="shrink-0">
+                        <img src="image/TestLogo.png" class="h-auto w-full max-w-[150px] min-[400px]:max-w-[170px] xl:max-w-[211px]" alt="Tech Care">
+                    </a>
+
+                    <!-- Desktop Navigation (md and up) -->
+                    <div class="hidden flex-1 items-center justify-center gap-1 md:flex">
+                        <a href="#"
+                            class="flex h-[41px] items-center justify-center gap-2 rounded-full px-2.5 text-[14px] font-bold text-[#072635] transition hover:bg-[#F6F7F8] lg:px-3">
+                            <img src="image/home_FILL0_wght300_GRAD0_opsz24.png" class="h-[18px] w-[18px]" alt="">
+                            <span class="hidden lg:inline">Overview</span>
+                        </a>
+                        <a href="#"
+                            class="flex h-[41px] items-center justify-center gap-2 rounded-full bg-[#01F0D0] px-3 text-[14px] font-bold text-[#072635] transition hover:bg-[#01F0D0] lg:px-4">
+                            <img src="image/group_FILL0_wght300_GRAD0_opsz24.png" class="h-auto w-auto" alt="">
+                            <span class="hidden lg:inline">Patients</span>
+                        </a>
+                        <a href="#"
+                            class="flex h-[41px] items-center justify-center gap-2 rounded-full px-2.5 text-[14px] font-bold text-[#072635] transition hover:bg-[#F6F7F8] lg:px-3">
+                            <img src="image/calendar_today_FILL0_wght300_GRAD0_opsz24.png" class="h-[18px] w-[18px]" alt="">
+                            <span class="hidden lg:inline">Schedule</span>
+                        </a>
+                        <a href="#"
+                            class="flex h-[41px] items-center justify-center gap-2 rounded-full px-2.5 text-[14px] font-bold text-[#072635] transition hover:bg-[#F6F7F8] lg:px-3">
+                            <img src="image/chat_bubble_FILL0_wght300_GRAD0_opsz24.png" class="h-[18px] w-[18px]" alt="">
+                            <span class="hidden lg:inline">Message</span>
+                        </a>
+                        <a href="#"
+                            class="flex h-[41px] items-center justify-center gap-2 rounded-full px-2.5 text-[14px] font-bold text-[#072635] transition hover:bg-[#F6F7F8] lg:px-3">
+                            <img src="image/credit_card_FILL0_wght300_GRAD0_opsz24.png" class="h-[18px] w-[18px]" alt="">
+                            <span class="hidden lg:inline">Transactions</span>
+                        </a>
+                    </div>
+
+                    <!-- User Info (md and up) -->
+                    <div class="hidden items-center gap-2 md:flex">
+                        <img src="image/senior-woman-doctor-and-portrait-smile-for-health-2023-11-27-05-18-16-utc.png"
+                            class="h-11 w-11 rounded-full object-cover" alt="">
+                        <div class="hidden text-right xl:block">
+                            <div class="text-[14px] font-bold leading-[19px] text-[#072635]">Dr. Jose Simmons</div>
+                            <div class="text-[14px] font-normal leading-[19px] text-[#707070]">General Practitioner</div>
+                        </div>
+                        <div class="flex items-center">
+                            <button type="button"
+                                class="mr-2 flex h-[41px] items-center justify-center rounded-full px-3 transition hover:bg-[#F6F7F8]">
+                                <img src="image/settings_FILL0_wght300_GRAD0_opsz24.png" class="h-auto w-auto" alt="">
+                            </button>
+                            <button type="button"
+                                class="hidden lg:flex h-[41px] items-center justify-center rounded-full px-3 transition hover:bg-[#F6F7F8]">
+                                <img src="image/more_vert_FILL0_wght300_GRAD0_opsz24.png" class="h-auto w-auto" alt="">
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Toggler (below md) -->
+                    <button id="mobileMenuToggle" type="button" aria-expanded="false" aria-controls="mobileMenu"
+                        aria-label="Toggle navigation"
+                        class="flex h-11 w-11 items-center justify-center rounded-full bg-[#F6F7F8] transition hover:bg-[#E9EBEC] md:hidden">
+                        <svg id="mobileMenuIcon" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="#072635"
+                            stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                            <line x1="4" y1="7" x2="20" y2="7"
+                                style="transition: transform .3s ease, opacity .3s ease; transform-box: fill-box; transform-origin: center;" />
+                            <line x1="4" y1="12" x2="20" y2="12"
+                                style="transition: transform .3s ease, opacity .3s ease;" />
+                            <line x1="4" y1="17" x2="20" y2="17"
+                                style="transition: transform .3s ease, opacity .3s ease; transform-box: fill-box; transform-origin: center;" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Mobile Navigation (collapsible) -->
+                <div id="mobileMenu"
+                    class="hidden w-full flex-col gap-0.5 rounded-2xl bg-[#FCFDFD] px-1 pb-2 pt-2 md:hidden">
+                    <div class="mb-3 flex items-center gap-2">
+                        <img src="image/senior-woman-doctor-and-portrait-smile-for-health-2023-11-27-05-18-16-utc.png"
+                            class="h-11 w-11 rounded-full object-cover" alt="">
+                        <div class="flex-1">
+                            <div class="text-[14px] font-bold leading-[19px] text-[#072635]">Dr. Jose Simmons</div>
+                            <div class="text-[14px] font-normal leading-[19px] text-[#707070]">General Practitioner</div>
+                        </div>
+                        <button type="button" class="rounded-md p-2 transition hover:bg-[#F6F7F8]">
+                            <img src="image/settings_FILL0_wght300_GRAD0_opsz24.png" class="h-5 w-5" alt="">
+                        </button>
+                    </div>
+
+                    <a href="#" class="flex w-full items-center justify-start gap-2 whitespace-nowrap rounded-md px-4 py-2.5 text-[14px] font-bold text-[#072635] transition hover:bg-[#F6F7F8]">
+                        <img src="image/home_FILL0_wght300_GRAD0_opsz24.png" class="h-[18px] w-[18px]" alt="">
+                        Overview
+                    </a>
+                    <a href="#" class="flex w-full items-center justify-start gap-2 whitespace-nowrap rounded-md bg-[#01F0D0] px-4 py-2.5 text-[14px] font-bold text-[#072635] transition hover:bg-[#01F0D0]">
+                        <img src="image/group_FILL0_wght300_GRAD0_opsz24.png" class="h-[18px] w-[18px]" alt="">
+                        Patients
+                    </a>
+                    <a href="#" class="flex w-full items-center justify-start gap-2 whitespace-nowrap rounded-md px-4 py-2.5 text-[14px] font-bold text-[#072635] transition hover:bg-[#F6F7F8]">
+                        <img src="image/calendar_today_FILL0_wght300_GRAD0_opsz24.png" class="h-[18px] w-[18px]" alt="">
+                        Schedule
+                    </a>
+                    <a href="#" class="flex w-full items-center justify-start gap-2 whitespace-nowrap rounded-md px-4 py-2.5 text-[14px] font-bold text-[#072635] transition hover:bg-[#F6F7F8]">
+                        <img src="image/chat_bubble_FILL0_wght300_GRAD0_opsz24.png" class="h-[18px] w-[18px]" alt="">
+                        Message
+                    </a>
+                    <a href="#" class="flex w-full items-center justify-start gap-2 whitespace-nowrap rounded-md px-4 py-2.5 text-[14px] font-bold text-[#072635] transition hover:bg-[#F6F7F8]">
+                        <img src="image/credit_card_FILL0_wght300_GRAD0_opsz24.png" class="h-[18px] w-[18px]" alt="">
+                        Transactions
+                    </a>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Dashboard Grid -->
+        <main class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-12">
+
+            <!-- Patients List -->
+            <section class="md:col-span-6 xl:col-span-3">
+                <div class="rounded-[20px] bg-white p-3 shadow-md">
+                    <div class="flex items-center justify-between px-2">
+                        <h2 class="text-xl font-extrabold text-[#072635]">Patients</h2>
+                        <a href="#" class="rounded-lg p-1.5 transition hover:bg-sky-300" aria-label="Search">
+                            <img src="image/search_FILL0_wght300_GRAD0_opsz24.png" class="h-auto w-auto" alt="Search">
+                        </a>
+                    </div>
+
+                    <div id="patients-container" class="thin-scroll mt-3 overflow-y-auto"></div>
+                </div>
+            </section>
+
+            <!-- Diagnosis History + Diagnostic List -->
+            <section id="diagnosis" class="flex flex-col gap-4 md:col-span-6 xl:col-span-6">
+
+                <div class="rounded-[20px] bg-white p-4 shadow-md">
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <h2 class="text-xl font-extrabold text-[#072635]">Diagnosis History</h2>
+
+                        <div class="flex flex-wrap items-center gap-3">
+                            <div class="flex items-center gap-3">
+                                <span class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-[#3F4B6B]"></span><span
+                                        class="text-[11.5px] font-semibold text-[#8A97A6]">Systolic</span></span>
+                                <span class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-[#01F0D0]"></span><span
+                                        class="text-[11.5px] font-semibold text-[#8A97A6]">Diastolic</span></span>
+                            </div>
+
+                            <div class="relative">
+                                <select id="year-select"
+                                    class="appearance-none rounded-full border border-[#EDF0F3] bg-white py-2 pl-4 pr-9 text-[12.5px] font-bold text-[#1D2939] outline-none transition focus:border-[#01F0D0]">
+                                </select>
+                                <svg viewBox="0 0 24 24" class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2"
+                                    fill="none" stroke="#8A97A6" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <polyline points="6 9 12 15 18 9" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative mt-4 h-[320px] w-full max-[576px]:h-[240px]">
+                        <canvas id="myAreaChart" class="absolute inset-0 !h-full !w-full" aria-label="Blood pressure chart"></canvas>
+                    </div>
+
+                    <div class="mt-4 grid grid-cols-2 gap-3 border-t border-[#F0F2F5] pt-4">
+                        <div class="relative overflow-hidden rounded-2xl bg-[#F2F3F8] p-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[11.5px] font-bold uppercase tracking-wide text-[#8A97A6]">Systolic</span>
+                                <svg id="sys-dot" viewBox="0 0 24 24" class="h-4 w-4 text-[#3F4B6B]" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="4"/></svg>
+                            </div>
+                            <div class="mt-1.5 flex items-end gap-1.5">
+                                <div class="text-[26px] font-extrabold leading-none text-[#1D2939]" id="sys-value"></div>
+                                <span class="pb-0.5 text-[11px] font-semibold text-[#8A97A6]">mmHg</span>
+                            </div>
+                            <div class="mt-2.5 inline-flex items-center gap-1.5 rounded-full bg-white/70 px-2.5 py-1 shadow-sm">
+                                <svg id="sys-arrow" viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+                                <span id="sys-status-text" class="text-[11.5px] font-bold text-[#072635]"></span>
+                            </div>
+                        </div>
+                        <div class="relative overflow-hidden rounded-2xl bg-[#E6FBF8] p-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[11.5px] font-bold uppercase tracking-wide text-[#8A97A6]">Diastolic</span>
+                                <svg id="dia-dot" viewBox="0 0 24 24" class="h-4 w-4 text-[#01F0D0]" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="4"/></svg>
+                            </div>
+                            <div class="mt-1.5 flex items-end gap-1.5">
+                                <div class="text-[26px] font-extrabold leading-none text-[#1D2939]" id="dia-value"></div>
+                                <span class="pb-0.5 text-[11px] font-semibold text-[#8A97A6]">mmHg</span>
+                            </div>
+                            <div class="mt-2.5 inline-flex items-center gap-1.5 rounded-full bg-white/70 px-2.5 py-1 shadow-sm">
+                                <svg id="dia-arrow" viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+                                <span id="dia-status-text" class="text-[11.5px] font-bold text-[#072635]"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                        <div class="rounded-xl bg-[#E0F3FA] p-4">
+                            <img src="image/respiratory rate.svg" class="h-[70px] w-[70px]" alt="Respiratory Rate">
+                            <h3 class="mt-3 text-[16px] font-extrabold capitalize leading-[22px] text-[#072635]">Respiratory Rate</h3>
+                            <p class="mt-0.5 text-[30px] font-extrabold leading-[41px] text-[#072635]" id="respiratory-rate"></p>
+                            <span class="text-[14px] font-extrabold text-[#072635]" id="resp-level"></span>
+                        </div>
+
+                        <div class="rounded-xl bg-[#FFE6E9] p-4">
+                            <img src="image/temperature.svg" class="h-[70px] w-[70px]" alt="Temperature">
+                            <h3 class="mt-3 text-[16px] font-extrabold capitalize leading-[22px] text-[#072635]">Temperature</h3>
+                            <p class="mt-0.5 text-[30px] font-extrabold leading-[41px] text-[#072635]" id="temperature"></p>
+                            <span class="text-[14px] font-extrabold text-[#072635]" id="temp-level"></span>
+                        </div>
+
+                        <div class="rounded-xl bg-[#FFE6F1] p-4">
+                            <img src="image/HeartBPM.svg" class="h-[70px] w-[70px]" alt="Heart Rate">
+                            <h3 class="mt-3 text-[16px] font-extrabold capitalize leading-[22px] text-[#072635]">Heart Rate</h3>
+                            <p class="mt-0.5 text-[30px] font-extrabold leading-[41px] text-[#072635]" id="heart-rate"></p>
+                            <span class="text-[14px] font-extrabold text-[#072635]" id="heart-level"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Diagnostic List -->
+                <div class="rounded-[20px] bg-white p-4 shadow-md">
+                    <h2 class="text-xl font-extrabold text-[#072635]">Diagnostic List</h2>
+                    <div class="thin-scroll mt-4 max-h-[450px] overflow-x-auto overflow-y-auto overscroll-contain rounded-[24px]">
+                        <table class="w-full border-separate border-spacing-0 text-left [&>tr:last-child>td]:border-b-0">
+                            <thead>
+                                <tr>
+                                    <th
+                                        class="sticky top-0 z-10 whitespace-nowrap rounded-l-[24px] bg-[#F6F7F8] px-5 py-3 text-[14px] font-bold">
+                                        Problem/Diagnosis</th>
+                                    <th
+                                        class="sticky top-0 z-10 whitespace-nowrap bg-[#F6F7F8] px-5 py-3 text-[14px] font-bold">
+                                        Description</th>
+                                    <th
+                                        class="sticky top-0 z-10 whitespace-nowrap rounded-r-[24px] bg-[#F6F7F8] px-5 py-3 text-[14px] font-bold">
+                                        Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="diagnostic-list"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Patient Details + Lab Results -->
+            <section class="flex flex-col gap-4 md:col-span-6 xl:col-span-3">
+
+                <div class="rounded-[20px] bg-white p-4 shadow-md">
+                    <div class="flex flex-col items-center">
+                        <img id="profile_pic" src="image/jessica/Layer 2@2x.png" alt="Patient Image"
+                            class="mt-3 mb-4 h-auto w-full max-w-[220px]">
+                        <h2 id="name" class="mb-4 text-center text-[20px] font-extrabold text-[#072635]">Jessica
+                            Taylor</h2>
+                    </div>
+
+                    <div class="mt-2">
+                        <div class="flex items-center gap-3 px-2 py-1.5">
+                            <img src="image/BirthIcon.svg" class="h-[42px] w-[42px]" alt="Birth Icon">
+                            <div>
+                                <div class="text-[14px] font-medium leading-[19px] text-[#072635]">Date of Birth</div>
+                                <div class="text-[14px] font-bold leading-[19px] text-[#072635]" id="dob"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 px-2 py-1.5">
+                            <img src="image/FemaleIcon.svg" class="h-[42px] w-[42px]" alt="Gender Icon">
+                            <div>
+                                <div class="text-[14px] font-medium leading-[19px] text-[#072635]">Gender</div>
+                                <div class="text-[14px] font-bold leading-[19px] text-[#072635]" id="gender"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 px-2 py-1.5">
+                            <img src="image/PhoneIcon.svg" class="h-[42px] w-[42px]" alt="Phone Icon">
+                            <div>
+                                <div class="text-[14px] font-medium leading-[19px] text-[#072635]">Contact Info.</div>
+                                <div class="text-[14px] font-bold leading-[19px] text-[#072635]" id="contact-info"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 px-2 py-1.5">
+                            <img src="image/PhoneIcon.svg" class="h-[42px] w-[42px]" alt="Phone Icon">
+                            <div>
+                                <div class="text-[14px] font-medium leading-[19px] text-[#072635]">Emergency Contacts.</div>
+                                <div class="text-[14px] font-bold leading-[19px] text-[#072635]" id="emergency-contacts"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 px-2 py-1.5">
+                            <img src="image/InsuranceIcon.svg" class="h-[42px] w-[42px]" alt="Insurance Icon">
+                            <div>
+                                <div class="text-[14px] font-medium leading-[19px] text-[#072635]">Insurance Provider</div>
+                                <div class="text-[14px] font-bold leading-[19px] text-[#072635]" id="insurance-provider"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 text-center">
+                        <a href="#"
+                            class="inline-flex h-10 items-center justify-center rounded-full bg-[#01F0D0] px-5 text-[14px] font-bold text-[#072635] transition hover:bg-[#00d8ba]">
+                            Show All Information
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Lab Results -->
+                <div class="rounded-[20px] bg-white p-4 shadow-md">
+                    <h2 class="text-xl font-extrabold text-[#072635]">Lab Results</h2>
+                    <div class="thin-scroll mt-2 max-h-[300px] overflow-y-auto overscroll-contain">
+                        <table class="w-full text-left">
+                            <tbody id="lab-results"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        (function () {
+            'use strict';
+
+            var API_URL = 'https://fedskillstest.coalitiontechnologies.workers.dev';
+            var API_AUTH = 'Basic ' + btoa('coalition:skills-test');
+            var PATIENT_NAME = 'Jessica Taylor';
+            var FALLBACK_PHOTO = 'image/jessica/Layer 2@2x.png';
+            var MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+            var selectedPatient = null;
+            var bpChart = null;
+
+            function byId(id) {
+                return document.getElementById(id);
+            }
+
+            function levelsOf(reading) {
+                return Array.isArray(reading.levels) ? reading.levels[0] : reading.levels;
+            }
+
+            function formatDate(input) {
+                var parts;
+                if (input.indexOf('-') !== -1) {
+                    parts = input.split('-');
+                    var date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+                } else if (input.indexOf('/') !== -1) {
+                    parts = input.split('/');
+                    var date = new Date(Number(parts[2]), Number(parts[0]) - 1, Number(parts[1]));
+                } else {
+                    return input;
+                }
+                return MONTH_NAMES[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
+            }
+
+            function calculateAge(dob) {
+                var birth = new Date(dob);
+                var now = new Date();
+                var age = now.getFullYear() - birth.getFullYear();
+                var m = now.getMonth() - birth.getMonth();
+                if (m < 0 || (m === 0 && now.getDate() < birth.getDate())) {
+                    age--;
+                }
+                return age;
+            }
+
+            function renderPatient(patient) {
+                selectedPatient = patient;
+
+                var photo = byId('profile_pic');
+                photo.onerror = function () {
+                    photo.onerror = null;
+                    photo.src = FALLBACK_PHOTO;
+                };
+                photo.src = patient.profile_picture;
+                byId('name').textContent = patient.name;
+                byId('dob').textContent = formatDate(patient.date_of_birth);
+                byId('gender').textContent = patient.gender;
+                byId('contact-info').textContent = patient.phone_number;
+                byId('emergency-contacts').textContent = patient.emergency_contact;
+                byId('insurance-provider').textContent = patient.insurance_type;
+
+                var latest = patient.diagnosis_history[0];
+                if (latest) {
+                    byId('respiratory-rate').textContent = latest.respiratory_rate.value + ' bpm';
+                    byId('temperature').textContent = latest.temperature.value + '°F';
+                    byId('heart-rate').textContent = latest.heart_rate.value + ' bpm';
+                    byId('resp-level').textContent = levelsOf(latest.respiratory_rate);
+                    byId('temp-level').textContent = levelsOf(latest.temperature);
+                    byId('heart-level').textContent = levelsOf(latest.heart_rate);
+
+                    renderBPTiles(latest);
+                }
+
+                renderDiagnosticList(patient.diagnostic_list);
+                renderLabResults(patient.lab_results);
+                renderPatientList(patient);
+                renderYearFilter(patient);
+                resizePatientsContainer();
+            }
+
+            function renderBPTiles(latest) {
+                renderBPTile('sys', latest.blood_pressure.systolic);
+                renderBPTile('dia', latest.blood_pressure.diastolic);
+            }
+
+            function renderBPTile(prefix, bp) {
+                byId(prefix + '-value').textContent = bp.value;
+
+                var level = levelsOf(bp);
+                var arrow = byId(prefix + '-arrow');
+                byId(prefix + '-status-text').textContent = level;
+
+                arrow.classList.remove('rotate-90', 'rotate-180', 'text-[#E66FD2]', 'text-[#01B8A2]', 'text-[#8A97A6]');
+
+                var lower = level.toLowerCase();
+                if (lower.indexOf('higher') !== -1 || lower.indexOf('above') !== -1 || lower.indexOf('high') !== -1) {
+                    arrow.classList.add('text-[#E66FD2]');
+                } else if (lower.indexOf('lower') !== -1 || lower.indexOf('below') !== -1 || lower.indexOf('low') !== -1) {
+                    arrow.classList.add('rotate-180', 'text-[#01B8A2]');
+                } else {
+                    arrow.classList.add('rotate-90', 'text-[#8A97A6]');
+                }
+            }
+
+            function renderDiagnosticList(list) {
+                var rows = list.map(function (item) {
+                    return '<tr>' +
+                        '<td class="border-b border-[#F6F7F8] px-5 py-2.5 text-[14px] font-medium text-[#072635]">' + item.name + '</td>' +
+                        '<td class="border-b border-[#F6F7F8] px-5 py-2.5 text-[14px] text-[#072635]">' + item.description + '</td>' +
+                        '<td class="border-b border-[#F6F7F8] px-5 py-2.5 text-[14px] text-[#072635]">' + item.status + '</td>' +
+                        '</tr>';
+                }).join('');
+                byId('diagnostic-list').innerHTML = rows;
+            }
+
+            function renderLabResults(results) {
+                var rows = results.map(function (result) {
+                    return '<tr>' +
+                        '<td class="px-2 py-2.5 text-[14px] whitespace-nowrap text-[#072635]">' + result + '</td>' +
+                        '<td class="px-2 py-2.5 text-right"><img src="image/download_FILL0_wght300_GRAD0_opsz24.svg" class="ml-auto h-[18px] w-[18px]" alt="Download"></td>' +
+                        '</tr>';
+                }).join('');
+                byId('lab-results').innerHTML = rows;
+            }
+
+            function renderPatientList(patient) {
+                var container = byId('patients-container');
+                container.innerHTML = '';
+
+                var row = document.createElement('div');
+                row.className = 'patient-row active flex items-center gap-3 rounded-lg p-3 mb-1 cursor-pointer';
+                row.setAttribute('aria-current', 'true');
+                row.innerHTML =
+                    '<img src="' + patient.profile_picture + '" alt="Patient Image" class="h-11 w-11 shrink-0 rounded-full object-cover">' +
+                    '<div class="min-w-0 flex-1">' +
+                    '<div class="truncate text-[14px] font-bold leading-[19px] text-[#072635]">' + patient.name + '</div>' +
+                    '<div class="text-[14px] font-normal leading-[19px] text-[#707070]">' + patient.gender + ', ' + calculateAge(patient.date_of_birth) + '</div>' +
+                    '</div>' +
+                    '<img src="image/more_horiz_FILL0_wght300_GRAD0_opsz24.png" alt="" class="shrink-0">';
+
+                container.appendChild(row);
+            }
+
+            function renderYearFilter(patient) {
+                var select = byId('year-select');
+                if (typeof Chart === 'undefined') {
+                    select.style.display = 'none';
+                    return;
+                }
+
+                var years = [];
+                patient.diagnosis_history.forEach(function (h) {
+                    if (years.indexOf(h.year) === -1) {
+                        years.push(h.year);
+                    }
+                });
+                years.sort(function (a, b) { return b - a; });
+
+                select.innerHTML = '';
+                years.forEach(function (y) {
+                    var option = document.createElement('option');
+                    option.value = y;
+                    option.textContent = y;
+                    select.appendChild(option);
+                });
+
+                select.onchange = function () {
+                    renderChart(String(select.value));
+                };
+
+                if (years.length) {
+                    select.value = String(years[0]);
+                    renderChart(String(years[0]));
+                }
+            }
+
+            function renderChart(year) {
+                if (!selectedPatient || typeof Chart === 'undefined') return;
+
+                var history = selectedPatient.diagnosis_history.filter(function (h) {
+                    return String(h.year) === String(year);
+                });
+
+                if (bpChart) {
+                    bpChart.destroy();
+                }
+
+                var ctx = byId('myAreaChart');
+                if (!ctx) return;
+
+                bpChart = new Chart(ctx.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: history.map(function (h) { return h.month + ' ' + h.year; }),
+                        datasets: [
+                            {
+                                label: 'Systolic',
+                                data: history.map(function (h) { return h.blood_pressure.systolic.value; }),
+                                borderColor: '#3F4B6B',
+                                backgroundColor: 'rgba(63, 75, 107, 0.08)',
+                                fill: true,
+                                tension: 0.4,
+                                borderWidth: 2,
+                                pointRadius: 4,
+                                pointBackgroundColor: '#3F4B6B',
+                                pointBorderColor: '#ffffff',
+                                pointBorderWidth: 1.5,
+                                pointHoverRadius: 6
+                            },
+                            {
+                                label: 'Diastolic',
+                                data: history.map(function (h) { return h.blood_pressure.diastolic.value; }),
+                                borderColor: '#01F0D0',
+                                backgroundColor: 'rgba(1, 240, 208, 0.12)',
+                                fill: true,
+                                tension: 0.4,
+                                borderWidth: 2,
+                                pointRadius: 4,
+                                pointBackgroundColor: '#01F0D0',
+                                pointBorderColor: '#ffffff',
+                                pointBorderWidth: 1.5,
+                                pointHoverRadius: 6
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: '#0B1B2B',
+                                titleFont: { family: 'Manrope', weight: '700' },
+                                bodyFont: { family: 'Manrope', weight: '500' },
+                                padding: 10,
+                                cornerRadius: 10,
+                                displayColors: false
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: { display: false },
+                                border: { display: false },
+                                ticks: {
+                                    color: '#8A97A6',
+                                    font: { family: 'Manrope', size: 11.5, weight: '500' },
+                                    maxRotation: 0,
+                                    autoSkip: true
+                                }
+                            },
+                            y: {
+                                grid: { color: '#F0F2F5' },
+                                border: { display: false },
+                                ticks: {
+                                    color: '#8A97A6',
+                                    font: { family: 'Manrope', size: 11.5, weight: '500' },
+                                    padding: 8
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function resizePatientsContainer() {
+                var list = byId('patients-container');
+                var diagnosis = byId('diagnosis');
+                if (!list || !diagnosis) return;
+
+                if (window.innerWidth >= 992) {
+                    list.style.maxHeight = diagnosis.offsetHeight + 'px';
+                } else if (window.innerWidth >= 768) {
+                    list.style.maxHeight = Math.max(200, Math.min(diagnosis.offsetHeight, window.innerHeight - 160)) + 'px';
+                } else {
+                    list.style.maxHeight = '';
+                    list.style.height = '';
+                }
+            }
+
+            function showLoadError() {
+                var container = byId('patients-container');
+                if (container) {
+                    container.innerHTML = '<p class="px-3 py-4 text-center text-[14px] font-medium text-[#707070]">Unable to load patient data.</p>';
+                }
+            }
+
+            function initMobileMenu() {
+                var toggle = byId('mobileMenuToggle');
+                var menu = byId('mobileMenu');
+                var icon = byId('mobileMenuIcon');
+                if (!toggle || !menu) return;
+
+                function setMenu(open) {
+                    menu.classList.toggle('hidden', !open);
+                    menu.classList.toggle('menu-anim', open);
+                    toggle.setAttribute('aria-expanded', String(open));
+                    toggle.style.backgroundColor = open ? '#01F0D0' : '';
+                    if (icon) {
+                        var bars = icon.querySelectorAll('line');
+                        bars[0].style.transform = open ? 'translateY(5px) rotate(45deg)' : '';
+                        bars[1].style.opacity = open ? '0' : '';
+                        bars[2].style.transform = open ? 'translateY(-5px) rotate(-45deg)' : '';
+                    }
+                }
+
+                toggle.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    setMenu(menu.classList.contains('hidden'));
+                });
+
+                menu.querySelectorAll('a').forEach(function (link) {
+                    link.addEventListener('click', function () {
+                        setMenu(false);
+                    });
+                });
+
+                document.addEventListener('click', function (event) {
+                    if (!menu.classList.contains('hidden') && !menu.contains(event.target)) {
+                        setMenu(false);
+                    }
+                });
+
+                window.addEventListener('resize', function () {
+                    if (window.innerWidth >= 768) {
+                        setMenu(false);
+                    }
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                resizePatientsContainer();
+                window.addEventListener('resize', resizePatientsContainer);
+                initMobileMenu();
+
+                fetch(API_URL, {
+                    headers: { 'Authorization': API_AUTH }
+                }).then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('Request failed with status ' + response.status);
+                    }
+                    return response.json();
+                }).then(function (data) {
+                    var patient = data.find(function (p) {
+                        return p.name.indexOf(PATIENT_NAME) !== -1;
+                    });
+                    if (!patient) {
+                        var fallback = data[3];
+                        patient = fallback;
+                    }
+                    if (!patient) {
+                        throw new Error('No matching patient found');
+                    }
+                    renderPatient(patient);
+                }).catch(function (error) {
+                    console.error(error);
+                    showLoadError();
+                });
+            });
+        })();
+    </script>
+</body>
+
+</html>
